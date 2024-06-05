@@ -12,6 +12,7 @@ import com.duyvv.android.base.BGType
 import com.duyvv.android.base.BaseFragment
 import com.duyvv.android.databinding.FragmentEditTaskBinding
 import com.duyvv.android.domain.Task
+import com.duyvv.android.domain.TaskPriority
 import com.duyvv.android.domain.TaskStatus
 import com.duyvv.android.ui.main.TaskViewModel
 import com.duyvv.android.util.app.FormatUtils
@@ -74,7 +75,17 @@ class EditTaskFragment : BaseFragment<FragmentEditTaskBinding>() {
             edtDescription.setText(currentTask?.description)
             tvDate.text = FormatUtils.convertCalendarToDMY(currentTask?.time ?: Calendar.getInstance())
             tvTime.text = FormatUtils.convertDateToHourAndMinute(currentTask?.time ?: Calendar.getInstance())
-            cbCompleted.isChecked = currentTask?.status == TaskStatus.COMPLETED
+            when (currentTask?.status) {
+                TaskStatus.COMPLETED -> rbCompleted.isChecked = true
+                TaskStatus.UNCOMPLETED -> rbUncompleted.isChecked = true
+                null -> Unit
+            }
+            when (currentTask?.priority) {
+                TaskPriority.LOW -> rbLow.isChecked = true
+                TaskPriority.MEDIUM -> rbMedium.isChecked = true
+                TaskPriority.HIGH -> rbHigh.isChecked = true
+                null -> Unit
+            }
         }
     }
 
@@ -111,7 +122,6 @@ class EditTaskFragment : BaseFragment<FragmentEditTaskBinding>() {
         val des = binding.edtDescription.text?.trim().toString()
         val date = binding.tvDate.text.trim().toString()
         val time = binding.tvTime.text.trim().toString()
-        val isCompleted = binding.cbCompleted.isChecked
         if (title.isEmpty()) {
             activity?.showMessage(requireContext(), "Title can't be blank", BGType.BG_TYPE_ERROR)
             return
@@ -128,6 +138,24 @@ class EditTaskFragment : BaseFragment<FragmentEditTaskBinding>() {
             activity?.showMessage(requireContext(), "Time can't be blank", BGType.BG_TYPE_ERROR)
             return
         }
+        val priority = if (binding.rbLow.isChecked) {
+            TaskPriority.LOW
+        } else if (binding.rbMedium.isChecked) {
+            TaskPriority.MEDIUM
+        } else if (binding.rbHigh.isChecked) {
+            TaskPriority.HIGH
+        } else {
+            activity?.showMessage(requireContext(), "Priority has not been selected", BGType.BG_TYPE_ERROR)
+            return
+        }
+        val status = if (binding.rbCompleted.isChecked) {
+            TaskStatus.COMPLETED
+        } else if (binding.rbUncompleted.isChecked) {
+            TaskStatus.UNCOMPLETED
+        } else {
+            activity?.showMessage(requireContext(), "Priority has not been selected", BGType.BG_TYPE_ERROR)
+            return
+        }
 
         currentTask?.let {
             taskViewModel.updateTask(
@@ -136,7 +164,8 @@ class EditTaskFragment : BaseFragment<FragmentEditTaskBinding>() {
                     title = title,
                     description = des,
                     time = FormatUtils.convertStringToCalendar("$date $time:00"),
-                    status = if (isCompleted) TaskStatus.COMPLETED else TaskStatus.UNCOMPLETED
+                    status = status,
+                    priority = priority
                 )
             )
             findNavController().popBackStack()

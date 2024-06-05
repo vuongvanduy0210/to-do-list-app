@@ -12,6 +12,7 @@ import com.duyvv.android.R
 import com.duyvv.android.databinding.ItemNotFoundBinding
 import com.duyvv.android.databinding.ItemTaskBinding
 import com.duyvv.android.domain.Task
+import com.duyvv.android.domain.TaskPriority
 import com.duyvv.android.domain.TaskStatus
 import com.duyvv.android.util.app.FormatUtils
 
@@ -83,6 +84,14 @@ class TaskAdapter(
                             ContextCompat.getColor(context, R.color.blue_dark)
                         } else {
                             Color.RED
+                        }
+                    )
+                    tvPriority.text = task.priority.des
+                    tvPriority.setTextColor(
+                        when (task.priority) {
+                            TaskPriority.LOW -> ContextCompat.getColor(context, R.color.black)
+                            TaskPriority.MEDIUM -> ContextCompat.getColor(context, R.color.blue_light)
+                            TaskPriority.HIGH -> ContextCompat.getColor(context, R.color.action_color)
                         }
                     )
 

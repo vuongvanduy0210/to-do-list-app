@@ -41,6 +41,20 @@
             android:textSize="@dimen/sp_17"
             android:textColor="@android:color/black"/>
 
+        <TextView
+            android:id="@+id/tv_priority"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            tools:text="Low"
+            android:textStyle="bold"
+            android:singleLine="true"
+            android:padding="@dimen/sp_10"
+            android:background="@drawable/bg_radius"
+            android:backgroundTint="@color/card_gray_2"
+            android:textSize="@dimen/sp_15"
+            android:textColor="@android:color/black"
+            android:layout_marginTop="@dimen/dp_10"/>
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"

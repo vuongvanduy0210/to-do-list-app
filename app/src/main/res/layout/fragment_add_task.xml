@@ -127,6 +127,46 @@
 
         </LinearLayout>
 
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/priority"
+            android:textSize="@dimen/sp_17"
+            android:layout_gravity="start"
+            android:layout_marginTop="@dimen/dp_20"/>
+
+        <RadioGroup
+            android:id="@+id/rg_priority"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:weightSum="3">
+
+            <RadioButton
+                android:id="@+id/rb_low"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:text="@string/low"
+                android:textSize="@dimen/sp_17"
+                android:layout_weight="1"/>
+
+            <RadioButton
+                android:id="@+id/rb_medium"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:text="@string/medium"
+                android:textSize="@dimen/sp_17"
+                android:layout_weight="1"/>
+
+            <RadioButton
+                android:id="@+id/rb_high"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:text="@string/high"
+                android:textSize="@dimen/sp_17"
+                android:layout_weight="1"/>
+        </RadioGroup>
+
         <Button
             android:id="@+id/btn_add_task"
             style="@style/BaseButton"

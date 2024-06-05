@@ -11,6 +11,7 @@ import com.duyvv.android.base.BGType
 import com.duyvv.android.base.BaseFragment
 import com.duyvv.android.databinding.FragmentAddTaskBinding
 import com.duyvv.android.domain.Task
+import com.duyvv.android.domain.TaskPriority
 import com.duyvv.android.domain.TaskStatus
 import com.duyvv.android.ui.main.TaskViewModel
 import com.duyvv.android.util.app.FormatUtils
@@ -114,13 +115,24 @@ class AddTaskFragment : BaseFragment<FragmentAddTaskBinding>() {
             activity?.showMessage(requireContext(), "Time can't be blank", BGType.BG_TYPE_ERROR)
             return
         }
+        val priority = if (binding.rbLow.isChecked) {
+            TaskPriority.LOW
+        } else if (binding.rbMedium.isChecked) {
+            TaskPriority.MEDIUM
+        } else if (binding.rbHigh.isChecked) {
+            TaskPriority.HIGH
+        } else {
+            activity?.showMessage(requireContext(), "Priority has not been selected", BGType.BG_TYPE_ERROR)
+            return
+        }
 
         taskViewModel.addTask(
             Task(
                 title = title,
                 description = des,
                 time = FormatUtils.convertStringToCalendar("$date $time:00"),
-                status = TaskStatus.UNCOMPLETED
+                status = TaskStatus.UNCOMPLETED,
+                priority = priority
             )
         )
         findNavController().popBackStack()

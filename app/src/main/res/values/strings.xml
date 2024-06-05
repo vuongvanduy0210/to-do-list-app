@@ -19,4 +19,10 @@
     <string name="status">Status</string>
     <string name="change">Change</string>
     <string name="mark_completed">Mark completed</string>
+    <string name="priority">Priority</string>
+    <string name="low">Low</string>
+    <string name="medium">Medium</string>
+    <string name="high">High</string>
+    <string name="completed">Completed</string>
+    <string name="uncompleted">Uncompleted</string>
 </resources>
