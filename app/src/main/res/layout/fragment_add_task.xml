@@ -1,0 +1,135 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+    </data>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:context=".ui.task.AddTaskFragment"
+        android:padding="@dimen/dp_10"
+        android:gravity="center_horizontal"
+        android:orientation="vertical">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/add_a_task"
+            android:textSize="@dimen/sp_20"
+            android:textStyle="bold"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/des_add"
+            android:textSize="@dimen/sp_17"
+            android:layout_marginTop="@dimen/dp_10"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/task_title"
+            android:textSize="@dimen/sp_17"
+            android:layout_gravity="start"
+            android:layout_marginTop="@dimen/dp_20"/>
+
+        <EditText
+            android:id="@+id/edt_title"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dp_54"
+            android:layout_marginTop="@dimen/dp_7"
+            android:background="@drawable/bg_bored_radius"
+            android:hint="@string/title_hint"
+            android:imeOptions="actionGo"
+            android:nextFocusDown="@id/edt_description"
+            android:inputType="text"
+            android:lines="1"
+            android:paddingHorizontal="@dimen/dp_10"
+            tools:ignore="RtlSymmetry" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/task_description"
+            android:textSize="@dimen/sp_17"
+            android:layout_gravity="start"
+            android:layout_marginTop="@dimen/dp_20"/>
+
+        <EditText
+            android:id="@+id/edt_description"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dp_54"
+            android:layout_marginTop="@dimen/dp_7"
+            android:background="@drawable/bg_bored_radius"
+            android:hint="@string/description_hint"
+            android:imeOptions="actionGo"
+            android:inputType="text"
+            android:lines="1"
+            android:paddingHorizontal="@dimen/dp_10"
+            tools:ignore="RtlSymmetry" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/task_time"
+            android:textSize="@dimen/sp_17"
+            android:layout_gravity="start"
+            android:layout_marginTop="@dimen/dp_20"/>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_marginTop="@dimen/dp_7"
+            android:weightSum="2">
+
+            <LinearLayout
+                android:id="@+id/layout_date"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="@dimen/dp_54"
+                android:background="@drawable/bg_bored_radius"
+                android:padding="@dimen/dp_10">
+
+                <TextView
+                    android:id="@+id/tv_date"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:hint="@string/date_hint"
+                    android:layout_gravity="center_vertical"
+                    android:textSize="@dimen/sp_17" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/layout_time"
+                android:layout_width="0dp"
+                android:layout_height="@dimen/dp_54"
+                android:layout_weight="1"
+                android:background="@drawable/bg_bored_radius"
+                android:padding="@dimen/dp_10"
+                android:layout_marginStart="@dimen/dp_10">
+
+                <TextView
+                    android:id="@+id/tv_time"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:hint="@string/time_hint"
+                    android:layout_gravity="center_vertical"
+                    android:textSize="@dimen/sp_17" />
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+        <Button
+            android:id="@+id/btn_add_task"
+            style="@style/BaseButton"
+            android:layout_marginTop="@dimen/dp_30"
+            android:text="@string/add_task" />
+
+    </LinearLayout>
+</layout>

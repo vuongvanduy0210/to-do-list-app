@@ -1,4 +1,4 @@
-package com.duyvv.android.ui.task
+package com.duyvv.android.ui.main
 
 import android.view.View
 import android.widget.PopupMenu
@@ -10,11 +10,9 @@ import com.duyvv.android.R
 import com.duyvv.android.base.BaseFragment
 import com.duyvv.android.databinding.FragmentListTaskBinding
 import com.duyvv.android.domain.Task
-import com.duyvv.android.domain.TaskStatus
-import com.duyvv.android.ui.task.adapter.TaskAdapter
+import com.duyvv.android.ui.main.adapter.TaskAdapter
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
-import java.util.Calendar
 
 @AndroidEntryPoint
 class ListTaskFragment : BaseFragment<FragmentListTaskBinding>() {
@@ -29,7 +27,7 @@ class ListTaskFragment : BaseFragment<FragmentListTaskBinding>() {
 
     override fun init() {
         activity = requireActivity() as MainActivity
-        taskAdapter = TaskAdapter { task, view ->
+        taskAdapter = TaskAdapter(requireContext()) { task, view ->
             showPopupMenu(task, view)
         }
     }
@@ -40,10 +38,13 @@ class ListTaskFragment : BaseFragment<FragmentListTaskBinding>() {
             setOnMenuItemClickListener { item ->
                 when (item.itemId) {
                     R.id.action_edit -> {
+                        activity?.hideKeyboard()
+                        navigate(ListTaskFragmentDirections.actionTaskFragmentToEditTaskFragment(task))
                         true
                     }
 
                     R.id.action_delete -> {
+                        activity?.hideKeyboard()
                         AlertDialog.Builder(requireContext())
                             .setTitle("Delete task")
                             .setMessage("Are you sure you want to delete this task?")
@@ -82,14 +83,13 @@ class ListTaskFragment : BaseFragment<FragmentListTaskBinding>() {
         }
 
         binding.btnAddTask.setOnClickListener {
-            taskViewModel.addTask(
-                Task(
-                    title = "Task new",
-                    description = "Day la mo ta task new",
-                    status = TaskStatus.UPCOMING,
-                    time = Calendar.getInstance()
-                )
-            )
+            activity?.hideKeyboard()
+            navigate(ListTaskFragmentDirections.actionTaskFragmentToAddTaskFragment())
         }
+    }
+
+    override fun onResume() {
+        super.onResume()
+        taskViewModel.getAllTask()
     }
 }

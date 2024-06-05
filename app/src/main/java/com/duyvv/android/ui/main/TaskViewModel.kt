@@ -1,4 +1,4 @@
-package com.duyvv.android.ui.task
+package com.duyvv.android.ui.main
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
@@ -20,13 +20,8 @@ class TaskViewModel @Inject constructor(
     private val _taskList = MutableLiveData<List<Task>>()
     val taskList: LiveData<List<Task>> get() = _taskList
 
-    init {
-        getAllTask()
-    }
-
-    private fun getAllTask() {
+    fun getAllTask() {
         val tasks = mutableListOf<Task>()
-        showLoading(true)
         job = viewModelScope.launch(exceptionHandler) {
             val response = taskRepository.getAllTasks()
             if (response.data != null) {
@@ -35,7 +30,6 @@ class TaskViewModel @Inject constructor(
             } else {
                 handleMessage(response.message ?: AppConstants.DEFAULT_MESSAGE_ERROR, BGType.BG_TYPE_ERROR)
             }
-            showLoading(false)
         }
     }
 
@@ -56,6 +50,16 @@ class TaskViewModel @Inject constructor(
             getAllTask()
             showLoading(false)
             handleMessage("Delete task successfully!", BGType.BG_TYPE_SUCCESS)
+        }
+    }
+
+    fun updateTask(task: Task) {
+        job = viewModelScope.launch(exceptionHandler) {
+            showLoading(true)
+            taskRepository.updateTask(task)
+            getAllTask()
+            showLoading(false)
+            handleMessage("Update task successfully!", BGType.BG_TYPE_SUCCESS)
         }
     }
 }

@@ -5,5 +5,17 @@
     <string name="all_tasks_txt">All tasks</string>
     <string name="edit_txt">Edit</string>
     <string name="delete_txt">Delete</string>
-    <string name="not_found_txt">Not found</string>
+    <string name="not_found_txt">Not found. Reload or add task to start.</string>
+    <string name="title_hint">Title</string>
+    <string name="description_hint">Description</string>
+    <string name="date_hint">Date</string>
+    <string name="add_task">Add Task</string>
+    <string name="time_hint">Time</string>
+    <string name="task_title">Title</string>
+    <string name="task_description">Description</string>
+    <string name="task_time">Time</string>
+    <string name="add_a_task">Add a task</string>
+    <string name="des_add">Fill the details below to add a task</string>
+    <string name="status">Status</string>
+    <string name="change">Change</string>
 </resources>

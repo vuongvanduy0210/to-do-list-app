@@ -14,6 +14,8 @@ interface LocalDataSource {
     suspend fun insertTask(task: TaskEntity)
 
     suspend fun deleteTask(taskId: Int)
+
+    suspend fun updateTask(task: TaskEntity)
 }
 
 class LocalDataSourceImpl @Inject constructor(
@@ -37,6 +39,12 @@ class LocalDataSourceImpl @Inject constructor(
     override suspend fun deleteTask(taskId: Int) {
         safeCallDao {
             taskDao.deleteTask(taskId)
+        }
+    }
+
+    override suspend fun updateTask(task: TaskEntity) {
+        safeCallDao {
+            taskDao.updateTask(task)
         }
     }
 }

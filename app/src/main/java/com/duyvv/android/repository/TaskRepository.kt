@@ -14,6 +14,8 @@ interface TaskRepository {
     suspend fun insertTask(task: Task)
 
     suspend fun deleteTask(id: Int)
+
+    suspend fun updateTask(task: Task)
 }
 
 class TaskRepositoryImpl @Inject constructor(
@@ -29,5 +31,13 @@ class TaskRepositoryImpl @Inject constructor(
 
     override suspend fun deleteTask(id: Int) = withContext(Dispatchers.IO) {
         localDataSource.deleteTask(id)
+    }
+
+    override suspend fun updateTask(task: Task) {
+        localDataSource.updateTask(
+            task.toTaskEntity().apply {
+                this.id = task.id ?: 0
+            }
+        )
     }
 }

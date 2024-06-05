@@ -10,7 +10,6 @@ import java.util.Date
 object FormatUtils {
 
     private const val PATTERN_DATE = "HH:mm dd/MM/yyyy"
-    private const val PATTERN_TIME = "HH:mm"
     private const val REQUEST_PATTERN_DATE = "dd/MM/yyyy HH:mm:ss"
 
     fun convertDate(date: Date?): String {
@@ -19,6 +18,10 @@ object FormatUtils {
 
     fun convertCalendarToString(date: Calendar): String {
         return DateFormat.format(REQUEST_PATTERN_DATE, date).toString()
+    }
+
+    fun convertCalendarToDMY(date: Calendar): String {
+        return DateFormat.format("dd/MM/yyyy", date).toString()
     }
 
     @SuppressLint("SimpleDateFormat")
@@ -62,9 +65,5 @@ object FormatUtils {
 
     fun convertDateToHourAndMinute(date: Calendar): String {
         return DateFormat.format("HH:mm", date).toString()
-    }
-
-    enum class DayOfWeek(val des: String) {
-        MON("Mon"), TUE("Tue"),
     }
 }

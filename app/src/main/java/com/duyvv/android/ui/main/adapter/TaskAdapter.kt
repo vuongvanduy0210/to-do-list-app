@@ -1,16 +1,22 @@
-package com.duyvv.android.ui.task.adapter
+package com.duyvv.android.ui.main.adapter
 
 import android.annotation.SuppressLint
+import android.content.Context
+import android.graphics.Color
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
+import com.duyvv.android.R
 import com.duyvv.android.databinding.ItemNotFoundBinding
 import com.duyvv.android.databinding.ItemTaskBinding
 import com.duyvv.android.domain.Task
+import com.duyvv.android.domain.TaskStatus
 import com.duyvv.android.util.app.FormatUtils
 
 class TaskAdapter(
+    private val context: Context,
     private val onClickOptions: (Task, View) -> Unit
 ) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
@@ -71,6 +77,13 @@ class TaskAdapter(
                     tvMonth.text = FormatUtils.getMonthFromCalendar(task.time)
                     tvTime.text = FormatUtils.convertDateToHourAndMinute(task.time)
                     tvStatus.text = task.status.des
+                    tvStatus.setTextColor(
+                        if (task.status == TaskStatus.COMPLETED) {
+                            ContextCompat.getColor(context, R.color.blue_dark)
+                        } else {
+                            Color.RED
+                        }
+                    )
 
                     btnOptions.setOnClickListener {
                         onClickOptions.invoke(task, it)

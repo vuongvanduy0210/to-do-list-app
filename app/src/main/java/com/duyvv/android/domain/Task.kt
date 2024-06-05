@@ -1,5 +1,6 @@
 package com.duyvv.android.domain
 
+import java.io.Serializable
 import java.util.Calendar
 
 data class Task(
@@ -8,9 +9,9 @@ data class Task(
     val description: String,
     val time: Calendar,
     val status: TaskStatus
-)
+) : Serializable
 
 enum class TaskStatus(val des: String) {
     COMPLETED("COMPLETED"),
-    UPCOMING("UPCOMING")
+    UNCOMPLETED("UNCOMPLETED")
 }
