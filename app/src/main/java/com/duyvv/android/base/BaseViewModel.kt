@@ -2,6 +2,7 @@ package com.duyvv.android.base
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.duyvv.android.util.app.ResponseMessage
 import kotlinx.coroutines.CoroutineExceptionHandler
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.flow.MutableSharedFlow
@@ -23,9 +24,23 @@ open class BaseViewModel : ViewModel() {
     private val _isLoading = MutableSharedFlow<Boolean>()
     val isLoading: SharedFlow<Boolean> = _isLoading
 
+    private val _responseMessage = MutableSharedFlow<ResponseMessage>()
+    val responseMessage: SharedFlow<ResponseMessage> = _responseMessage
+
     fun showLoading(isShow: Boolean) {
         viewModelScope.launch {
             _isLoading.emit(isShow)
+        }
+    }
+
+    fun handleMessage(message: String, bgType: BGType) {
+        viewModelScope.launch {
+            _responseMessage.emit(
+                ResponseMessage(
+                    message = message,
+                    bgType = bgType
+                )
+            )
         }
     }
 
