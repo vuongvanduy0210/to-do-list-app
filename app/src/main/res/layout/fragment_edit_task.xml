@@ -39,6 +39,7 @@
             android:nextFocusDown="@id/edt_description"
             android:inputType="text"
             android:lines="1"
+            android:maxLength="60"
             android:paddingHorizontal="@dimen/dp_10"
             tools:ignore="RtlSymmetry" />
 
@@ -58,6 +59,7 @@
             android:background="@drawable/bg_bored_radius"
             android:hint="@string/description_hint"
             android:imeOptions="actionGo"
+            android:maxLength="300"
             android:inputType="text"
             android:lines="1"
             android:paddingHorizontal="@dimen/dp_10"

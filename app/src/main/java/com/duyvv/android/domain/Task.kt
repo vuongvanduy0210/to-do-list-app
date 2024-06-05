@@ -8,7 +8,7 @@ data class Task(
     val title: String,
     val description: String,
     val time: Calendar,
-    val status: TaskStatus
+    var status: TaskStatus
 ) : Serializable
 
 enum class TaskStatus(val des: String) {

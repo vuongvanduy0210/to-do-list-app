@@ -18,4 +18,5 @@
     <string name="des_add">Fill the details below to add a task</string>
     <string name="status">Status</string>
     <string name="change">Change</string>
+    <string name="mark_completed">Mark completed</string>
 </resources>

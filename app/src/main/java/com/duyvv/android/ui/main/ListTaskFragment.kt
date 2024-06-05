@@ -10,6 +10,7 @@ import com.duyvv.android.R
 import com.duyvv.android.base.BaseFragment
 import com.duyvv.android.databinding.FragmentListTaskBinding
 import com.duyvv.android.domain.Task
+import com.duyvv.android.domain.TaskStatus
 import com.duyvv.android.ui.main.adapter.TaskAdapter
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
@@ -27,9 +28,34 @@ class ListTaskFragment : BaseFragment<FragmentListTaskBinding>() {
 
     override fun init() {
         activity = requireActivity() as MainActivity
-        taskAdapter = TaskAdapter(requireContext()) { task, view ->
-            showPopupMenu(task, view)
-        }
+        taskAdapter = TaskAdapter(
+            context = requireContext(),
+            onClickItemTask = {
+                openDetailDialog(it)
+            },
+            onClickOptions = { task, view ->
+                showPopupMenu(task, view)
+            }
+        )
+    }
+
+    private fun openDetailDialog(task: Task) {
+        DetailTaskDialog(
+            task,
+            onClickEdit = {
+                goToEditScreen(it)
+            },
+            onClickDelete = {
+                deleteTask(it)
+            },
+            onClickMarkCompleted = {
+                taskViewModel.updateTask(
+                    it.apply {
+                        status = TaskStatus.COMPLETED
+                    }
+                )
+            }
+        ).show(childFragmentManager, "detail_task_dialog")
     }
 
     private fun showPopupMenu(task: Task, view: View) {
@@ -38,21 +64,12 @@ class ListTaskFragment : BaseFragment<FragmentListTaskBinding>() {
             setOnMenuItemClickListener { item ->
                 when (item.itemId) {
                     R.id.action_edit -> {
-                        activity?.hideKeyboard()
-                        navigate(ListTaskFragmentDirections.actionTaskFragmentToEditTaskFragment(task))
+                        goToEditScreen(task)
                         true
                     }
 
                     R.id.action_delete -> {
-                        activity?.hideKeyboard()
-                        AlertDialog.Builder(requireContext())
-                            .setTitle("Delete task")
-                            .setMessage("Are you sure you want to delete this task?")
-                            .setPositiveButton("Yes") { _, _ ->
-                                task.id?.let { taskViewModel.deleteTask(it) }
-                            }
-                            .setNegativeButton("Cancel") { _, _ -> }
-                            .show()
+                        deleteTask(task)
                         false
                     }
 
@@ -60,6 +77,23 @@ class ListTaskFragment : BaseFragment<FragmentListTaskBinding>() {
                 }
             }
         }.show()
+    }
+
+    private fun goToEditScreen(task: Task) {
+        activity?.hideKeyboard()
+        navigate(ListTaskFragmentDirections.actionTaskFragmentToEditTaskFragment(task))
+    }
+
+    private fun deleteTask(task: Task) {
+        activity?.hideKeyboard()
+        AlertDialog.Builder(requireContext())
+            .setTitle("Delete task")
+            .setMessage("Are you sure you want to delete this task?")
+            .setPositiveButton("Yes") { _, _ ->
+                task.id?.let { taskViewModel.deleteTask(it) }
+            }
+            .setNegativeButton("Cancel") { _, _ -> }
+            .show()
     }
 
     override fun setUp() {

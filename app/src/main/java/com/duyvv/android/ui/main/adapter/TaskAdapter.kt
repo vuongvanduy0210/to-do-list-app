@@ -17,6 +17,7 @@ import com.duyvv.android.util.app.FormatUtils
 
 class TaskAdapter(
     private val context: Context,
+    private val onClickItemTask: (Task) -> Unit,
     private val onClickOptions: (Task, View) -> Unit
 ) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
@@ -87,6 +88,10 @@ class TaskAdapter(
 
                     btnOptions.setOnClickListener {
                         onClickOptions.invoke(task, it)
+                    }
+
+                    layoutItemTask.setOnClickListener {
+                        onClickItemTask.invoke(task)
                     }
                 }
             }
