@@ -11,6 +11,8 @@ import javax.inject.Inject
 interface TaskRepository {
     suspend fun getAllTasks(): Response<List<Task>>
 
+    suspend fun getTasks(priority: Int?, status: Boolean?): Response<List<Task>>
+
     suspend fun insertTask(task: Task)
 
     suspend fun deleteTask(id: Int)
@@ -23,6 +25,13 @@ class TaskRepositoryImpl @Inject constructor(
 ) : TaskRepository {
     override suspend fun getAllTasks(): Response<List<Task>> = withContext(Dispatchers.IO) {
         localDataSource.getAllTasks()
+    }
+
+    override suspend fun getTasks(
+        priority: Int?,
+        status: Boolean?
+    ): Response<List<Task>> = withContext(Dispatchers.IO) {
+        localDataSource.getTasks(priority, status)
     }
 
     override suspend fun insertTask(task: Task) = withContext(Dispatchers.IO) {

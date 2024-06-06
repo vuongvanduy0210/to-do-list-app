@@ -14,9 +14,7 @@ import dagger.hilt.android.AndroidEntryPoint
 @AndroidEntryPoint
 class DetailTaskDialog(
     private val task: Task,
-    private val onClickEdit: (Task) -> Unit,
-    private val onClickDelete: (Task) -> Unit,
-    private val onClickMarkCompleted: (Task) -> Unit
+    private val listener: OnClickDetailTaskListener
 ) : BaseBottomSheetDialog<BottomSheetDetailTaskBinding>() {
 
     override val layoutRes = R.layout.bottom_sheet_detail_task
@@ -40,19 +38,25 @@ class DetailTaskDialog(
             )
 
             btnEdit.setOnClickListener {
-                onClickEdit.invoke(task)
+                listener.onClickEdit(task)
                 dismiss()
             }
 
             btnDelete.setOnClickListener {
-                onClickDelete.invoke(task)
+                listener.onClickDelete(task)
                 dismiss()
             }
 
             layoutMarkCompleted.setOnClickListener {
-                onClickMarkCompleted.invoke(task)
+                listener.onClickMarkCompleted(task)
                 dismiss()
             }
         }
+    }
+
+    interface OnClickDetailTaskListener {
+        fun onClickEdit(task: Task)
+        fun onClickDelete(task: Task)
+        fun onClickMarkCompleted(task: Task)
     }
 }

@@ -11,6 +11,8 @@ import javax.inject.Inject
 interface LocalDataSource {
     suspend fun getAllTasks(): Response<List<Task>>
 
+    suspend fun getTasks(priority: Int?, status: Boolean?): Response<List<Task>>
+
     suspend fun insertTask(task: TaskEntity)
 
     suspend fun deleteTask(taskId: Int)
@@ -26,6 +28,20 @@ class LocalDataSourceImpl @Inject constructor(
         return safeCallDao {
             taskDao.getAllTasks().map {
                 it.toDomainModel()
+            }
+        }
+    }
+
+    override suspend fun getTasks(priority: Int?, status: Boolean?): Response<List<Task>> {
+        return safeCallDao {
+            if (priority != null && status != null) {
+                taskDao.getTasks(priority, status).map { it.toDomainModel() }
+            } else if (priority != null && status == null) {
+                taskDao.getTasks(priority).map { it.toDomainModel() }
+            } else if (status != null) {
+                taskDao.getTasks(status).map { it.toDomainModel() }
+            } else {
+                taskDao.getAllTasks().map { it.toDomainModel() }
             }
         }
     }

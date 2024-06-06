@@ -13,6 +13,15 @@ interface TaskDao {
     @Query("select * from tasks")
     suspend fun getAllTasks(): List<TaskEntity>
 
+    @Query("select * from tasks where priority = :priority and isCompleted = :status")
+    suspend fun getTasks(priority: Int, status: Boolean): List<TaskEntity>
+
+    @Query("select * from tasks where priority = :priority")
+    suspend fun getTasks(priority: Int): List<TaskEntity>
+
+    @Query("select * from tasks where isCompleted = :status")
+    suspend fun getTasks(status: Boolean): List<TaskEntity>
+
     @Insert(onConflict = OnConflictStrategy.IGNORE)
     suspend fun insertTask(task: TaskEntity)
 

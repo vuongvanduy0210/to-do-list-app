@@ -20,6 +20,10 @@ class TaskViewModel @Inject constructor(
     private val _taskList = MutableLiveData<List<Task>>()
     val taskList: LiveData<List<Task>> get() = _taskList
 
+    var priority: Int? = null
+
+    var status: Boolean? = null
+
     fun getAllTask() {
         val tasks = mutableListOf<Task>()
         job = viewModelScope.launch(exceptionHandler) {
@@ -33,11 +37,24 @@ class TaskViewModel @Inject constructor(
         }
     }
 
+    fun getTasks() {
+        val tasks = mutableListOf<Task>()
+        job = viewModelScope.launch(exceptionHandler) {
+            val response = taskRepository.getTasks(priority, status)
+            if (response.data != null) {
+                tasks.addAll(response.data)
+                _taskList.value = tasks
+            } else {
+                handleMessage(response.message ?: AppConstants.DEFAULT_MESSAGE_ERROR, BGType.BG_TYPE_ERROR)
+            }
+        }
+    }
+
     fun addTask(task: Task) {
         job = viewModelScope.launch(exceptionHandler) {
             showLoading(true)
             taskRepository.insertTask(task)
-            getAllTask()
+            getTasks()
             showLoading(false)
             handleMessage("Add task successfully!", BGType.BG_TYPE_SUCCESS)
         }
@@ -47,7 +64,7 @@ class TaskViewModel @Inject constructor(
         job = viewModelScope.launch(exceptionHandler) {
             showLoading(true)
             taskRepository.deleteTask(id)
-            getAllTask()
+            getTasks()
             showLoading(false)
             handleMessage("Delete task successfully!", BGType.BG_TYPE_SUCCESS)
         }
@@ -57,9 +74,14 @@ class TaskViewModel @Inject constructor(
         job = viewModelScope.launch(exceptionHandler) {
             showLoading(true)
             taskRepository.updateTask(task)
-            getAllTask()
+            getTasks()
             showLoading(false)
             handleMessage("Update task successfully!", BGType.BG_TYPE_SUCCESS)
         }
+    }
+
+    fun updateFilterProperties(priority: Int?, status: Boolean?) {
+        this.priority = priority
+        this.status = status
     }
 }

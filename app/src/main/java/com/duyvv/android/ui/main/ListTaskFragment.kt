@@ -1,5 +1,6 @@
 package com.duyvv.android.ui.main
 
+import android.annotation.SuppressLint
 import android.view.View
 import android.widget.PopupMenu
 import androidx.appcompat.app.AlertDialog
@@ -10,12 +11,14 @@ import com.duyvv.android.R
 import com.duyvv.android.base.BaseFragment
 import com.duyvv.android.databinding.FragmentListTaskBinding
 import com.duyvv.android.domain.Task
+import com.duyvv.android.domain.TaskPriority
 import com.duyvv.android.domain.TaskStatus
 import com.duyvv.android.ui.main.adapter.TaskAdapter
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
+@SuppressLint("SetTextI18n")
 class ListTaskFragment : BaseFragment<FragmentListTaskBinding>() {
 
     override val layoutRes = R.layout.fragment_list_task
@@ -42,18 +45,22 @@ class ListTaskFragment : BaseFragment<FragmentListTaskBinding>() {
     private fun openDetailDialog(task: Task) {
         DetailTaskDialog(
             task,
-            onClickEdit = {
-                goToEditScreen(it)
-            },
-            onClickDelete = {
-                deleteTask(it)
-            },
-            onClickMarkCompleted = {
-                taskViewModel.updateTask(
-                    it.apply {
-                        status = TaskStatus.COMPLETED
-                    }
-                )
+            object : DetailTaskDialog.OnClickDetailTaskListener {
+                override fun onClickEdit(task: Task) {
+                    goToEditScreen(task)
+                }
+
+                override fun onClickDelete(task: Task) {
+                    deleteTask(task)
+                }
+
+                override fun onClickMarkCompleted(task: Task) {
+                    taskViewModel.updateTask(
+                        task.apply {
+                            status = TaskStatus.COMPLETED
+                        }
+                    )
+                }
             }
         ).show(childFragmentManager, "detail_task_dialog")
     }
@@ -120,10 +127,32 @@ class ListTaskFragment : BaseFragment<FragmentListTaskBinding>() {
             activity?.hideKeyboard()
             navigate(ListTaskFragmentDirections.actionTaskFragmentToAddTaskFragment())
         }
+
+        binding.btnFilter.setOnClickListener {
+            openFilterDialog()
+        }
+    }
+
+    private fun openFilterDialog() {
+        FilterTaskDialog(
+            priority = taskViewModel.priority,
+            status = taskViewModel.status,
+            object : FilterTaskDialog.OnClickFilterTaskListener {
+                override fun onClickApplyFilter(priority: TaskPriority?, status: TaskStatus?) {
+                    val isCompleted = when (status) {
+                        TaskStatus.COMPLETED -> true
+                        TaskStatus.UNCOMPLETED -> false
+                        null -> null
+                    }
+                    taskViewModel.updateFilterProperties(priority?.level, isCompleted)
+                    taskViewModel.getTasks()
+                }
+            }
+        ).show(childFragmentManager, "filter_task_dialog")
     }
 
     override fun onResume() {
         super.onResume()
-        taskViewModel.getAllTask()
+        taskViewModel.getTasks()
     }
 }

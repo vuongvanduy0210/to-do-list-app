@@ -22,14 +22,14 @@
             android:textAlignment="center"
             android:textSize="@dimen/sp_30"
             android:textStyle="bold"
-            android:textColor="@android:color/black"/>
+            android:textColor="@android:color/black" />
 
         <TextView
             android:id="@+id/tv_date_time"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             tools:text="21:44 05/06/2024"
-            android:alpha="0.8"/>
+            android:alpha="0.8" />
 
         <TextView
             android:id="@+id/tv_description"
@@ -39,7 +39,7 @@
             tools:text="Full House is the Grand prize in any Tambola game played. It means all 15 Numbers of a ticket are cut, striked out"
             android:alpha="0.7"
             android:textSize="@dimen/sp_17"
-            android:textColor="@android:color/black"/>
+            android:textColor="@android:color/black" />
 
         <TextView
             android:id="@+id/tv_priority"
@@ -53,7 +53,7 @@
             android:backgroundTint="@color/card_gray_2"
             android:textSize="@dimen/sp_15"
             android:textColor="@android:color/black"
-            android:layout_marginTop="@dimen/dp_20"/>
+            android:layout_marginTop="@dimen/dp_20" />
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -100,14 +100,14 @@
                 <ImageView
                     android:layout_width="@dimen/dp_30"
                     android:layout_height="@dimen/dp_30"
-                    android:src="@drawable/ic_delete_outlined"/>
+                    android:src="@drawable/ic_delete_outlined" />
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/delete_txt"
                     android:textSize="@dimen/sp_18"
-                    android:textColor="@android:color/holo_red_light"/>
+                    android:textColor="@android:color/holo_red_light" />
             </LinearLayout>
 
         </LinearLayout>
@@ -126,14 +126,14 @@
             <ImageView
                 android:layout_width="@dimen/dp_30"
                 android:layout_height="@dimen/dp_30"
-                android:src="@drawable/ic_check"/>
+                android:src="@drawable/ic_check" />
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/mark_completed"
                 android:textColor="@color/blue_dark"
-                android:textSize="@dimen/sp_18"/>
+                android:textSize="@dimen/sp_18" />
         </LinearLayout>
 
     </LinearLayout>
