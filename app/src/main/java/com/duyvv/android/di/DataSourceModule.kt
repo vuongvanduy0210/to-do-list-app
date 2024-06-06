@@ -1,7 +1,7 @@
 package com.duyvv.android.di
 
-import com.duyvv.android.repository.TaskRepository
-import com.duyvv.android.repository.TaskRepositoryImpl
+import com.duyvv.android.datasource.LocalDataSource
+import com.duyvv.android.datasource.LocalDataSourceImpl
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -10,10 +10,11 @@ import javax.inject.Singleton
 
 @Module
 @InstallIn(SingletonComponent::class)
-object RepositoryModule {
+object DataSourceModule {
+
     @Provides
     @Singleton
-    fun provideTaskRepository(taskRepositoryImpl: TaskRepositoryImpl): TaskRepository {
-        return taskRepositoryImpl
+    fun provideLocalDataSource(localDataSourceImpl: LocalDataSourceImpl): LocalDataSource {
+        return localDataSourceImpl
     }
 }

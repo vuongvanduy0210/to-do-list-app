@@ -2,11 +2,9 @@ package com.duyvv.android.di
 
 import android.content.Context
 import androidx.room.Room
-import com.duyvv.android.database.RoomDatabase
-import com.duyvv.android.database.dao.EvaluationDao
-import com.duyvv.android.database.dao.ImageDao
-import com.duyvv.android.database.dao.RoomDao
-import com.duyvv.android.database.dao.UserDao
+import com.duyvv.android.database.TaskDatabase
+import com.duyvv.android.database.dao.TaskDao
+import com.duyvv.android.util.app.AppConstants
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -19,31 +17,16 @@ import javax.inject.Singleton
 object DatabaseModule {
     @Provides
     @Singleton
-    fun provideAppDatabase(@ApplicationContext appContext: Context): RoomDatabase {
+    fun provideTaskDatabase(@ApplicationContext appContext: Context): TaskDatabase {
         return Room.databaseBuilder(
             appContext,
-            RoomDatabase::class.java,
-            "Users"
-        ).fallbackToDestructiveMigration().build()
+            TaskDatabase::class.java,
+            AppConstants.TASK_DB_NAME
+        ).build()
     }
 
     @Provides
-    fun provideUserDao(roomDatabase: RoomDatabase): UserDao {
-        return roomDatabase.usersDao
-    }
-
-    @Provides
-    fun provideRoomDao(roomDatabase: RoomDatabase): RoomDao {
-        return roomDatabase.roomsDao
-    }
-
-    @Provides
-    fun provideEvaluationDao(roomDatabase: RoomDatabase): EvaluationDao {
-        return roomDatabase.evaluationsDao
-    }
-
-    @Provides
-    fun provideImageDao(roomDatabase: RoomDatabase): ImageDao {
-        return roomDatabase.imagesDao
+    fun provideTaskDao(roomDatabase: TaskDatabase): TaskDao {
+        return roomDatabase.taskDao
     }
 }
