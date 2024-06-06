@@ -62,7 +62,7 @@
             android:alpha="0.5"
             android:background="@android:color/black"/>
 
-        <LinearLayout
+        <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_weight="0.2"
@@ -72,19 +72,23 @@
             android:orientation="vertical">
 
             <LinearLayout
+                android:id="@+id/linearLayout"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+                android:layout_height="wrap_content"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent">
 
                 <TextView
                     android:id="@+id/tv_title"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    tools:text="Full house"
-                    android:singleLine="true"
-                    android:textSize="20sp"
                     android:layout_weight="1"
+                    android:singleLine="true"
+                    android:textColor="@android:color/black"
+                    android:textSize="20sp"
                     android:textStyle="bold"
-                    android:textColor="@android:color/black"/>
+                    tools:text="Full house" />
 
                 <ImageView
                     android:id="@+id/btn_options"
@@ -96,52 +100,60 @@
 
             <TextView
                 android:id="@+id/tv_description"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                tools:text="Full House is the Grand prize in any Tambola game played. It means all 15 Numbers of a ticket are cut, striked out"
-                android:singleLine="true"
                 android:alpha="0.7"
+                android:singleLine="true"
+                android:textColor="@android:color/black"
                 android:textSize="@dimen/sp_17"
-                android:textColor="@android:color/black"/>
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/linearLayout"
+                tools:text="Full House is the Grand prize in any Tambola game played. It means all 15 Numbers of a ticket are cut, striked out" />
 
             <TextView
                 android:id="@+id/tv_time"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                tools:text="aaaaaaaaaaaaaaaaaaa"
-                android:singleLine="true"
                 android:alpha="0.7"
-                android:textSize="@dimen/sp_15"
+                android:singleLine="true"
                 android:textColor="@android:color/black"
-                android:layout_marginTop="@dimen/dp_5"/>
+                android:textSize="@dimen/sp_15"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/tv_description"
+                tools:text="aaaaaaaaaaaaaaaaaaa" />
 
             <TextView
                 android:id="@+id/tv_priority"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                tools:text="Low"
-                android:textStyle="bold"
-                android:singleLine="true"
-                android:padding="@dimen/sp_10"
+                android:layout_marginTop="@dimen/dp_8"
                 android:background="@drawable/bg_radius"
                 android:backgroundTint="@color/card_gray_2"
-                android:textSize="@dimen/sp_15"
+                android:padding="@dimen/sp_10"
+                android:singleLine="true"
                 android:textColor="@android:color/black"
-                android:layout_marginTop="@dimen/dp_5"/>
+                android:textSize="@dimen/sp_15"
+                android:textStyle="bold"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/tv_time"
+                tools:text="Low" />
 
             <TextView
                 android:id="@+id/tv_status"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textColor="@android:color/black"
-                tools:text="COMPLETED"
-                android:textSize="@dimen/sp_14"
                 android:layout_gravity="end"
-                android:layout_marginTop="10dp"
                 android:paddingHorizontal="@dimen/dp_10"
-                android:paddingVertical="@dimen/dp_5"/>
+                android:paddingVertical="@dimen/dp_5"
+                android:textColor="@android:color/black"
+                android:textSize="@dimen/sp_14"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/tv_priority"
+                tools:text="COMPLETED" />
 
-        </LinearLayout>
+        </androidx.constraintlayout.widget.ConstraintLayout>
 
     </LinearLayout>
 

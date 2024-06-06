@@ -53,13 +53,13 @@
             android:backgroundTint="@color/card_gray_2"
             android:textSize="@dimen/sp_15"
             android:textColor="@android:color/black"
-            android:layout_marginTop="@dimen/dp_10"/>
+            android:layout_marginTop="@dimen/dp_20"/>
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:weightSum="2"
-            android:layout_marginTop="@dimen/dp_20">
+            android:layout_marginTop="@dimen/dp_10">
 
             <LinearLayout
                 android:id="@+id/btn_edit"

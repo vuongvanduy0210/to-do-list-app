@@ -100,7 +100,7 @@ class ListTaskFragment : BaseFragment<FragmentListTaskBinding>() {
         binding.rcvTask.adapter = taskAdapter
         taskViewModel.apply {
             taskList.observe(viewLifecycleOwner) {
-                taskAdapter.setItems(it.sortedByDescending { task -> task.time.time })
+                taskAdapter.setItems(it.sortedBy { task -> task.time.time })
             }
 
             lifecycleScope.launch {
